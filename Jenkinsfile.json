@@ -8,7 +8,7 @@
     "hostname": "croc-hunter.acs.az.estrado.io"
   },
   "container_repo": {
-    "host": "docker.com",
+    "host": "registry-1.docker.io",
     "master_acct": "uenyioha",
     "alt_acct": "uenyioha",
     "jenkins_creds_id": "docker_hub_creds",
