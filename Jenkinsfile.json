@@ -11,7 +11,7 @@
     "host": "quay.io",
     "master_acct": "lachie83",
     "alt_acct": "lachie83",
-    "jenkins_creds_id": "quay_creds",
+    "jenkins_creds_id": "docker_hub_creds",
     "repo": "croc-hunter",
     "dockeremail": ".",
     "dockerfile": "./",
