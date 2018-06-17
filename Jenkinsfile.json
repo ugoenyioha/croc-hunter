@@ -19,7 +19,7 @@
   },
   "pipeline": {
       "enabled": true,
-      "debug": true,
+      "debug": false,
       "library": {
         "branch": "dev"
       }
