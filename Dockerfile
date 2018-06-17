@@ -15,7 +15,7 @@ COPY . /go/src/github.com/lachie83/croc-hunter
 COPY static/ static/
 
 ENV GIT_SHA $VCS_REF
-WORKDIR "/go/src/github.com/lachie83/croc-hunter"
+WORKDIR /go/src/github.com/lachie83/croc-hunter
 RUN go install -v .
 
 CMD ["croc-hunter"]
