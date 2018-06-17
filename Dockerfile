@@ -1,6 +1,6 @@
 FROM golang:1.8-alpine3.6
 
-MAINTAINER Lachlan Evenson <lachlan.evenson@gmail.com>
+LABEL maintainer=Lachlan Evenson <lachlan.evenson@gmail.com>
 
 ARG VCS_REF
 ARG BUILD_DATE
