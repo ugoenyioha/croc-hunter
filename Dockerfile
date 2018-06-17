@@ -16,7 +16,7 @@ COPY static/ static/
 
 ENV GIT_SHA $VCS_REF
 ENV GOPATH /go
-WORKDIR "$GOPATH/src/github.com/lachie83/croc-hunter"
+WORKDIR "/$GOPATH/src/github.com/lachie83/croc-hunter"
 RUN go install -v .
 
 CMD ["croc-hunter"]
