@@ -85,7 +85,7 @@ volumes:[
           }
 
           container('lineage') {
-            sh "lineage $dockerfile"
+            sh "lineage scan-file $dockerfile"
           }
       }
 
