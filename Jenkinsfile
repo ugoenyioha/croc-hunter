@@ -48,18 +48,18 @@ volumes:[
       sh "env | sort"
 
       println "Runing kubectl/helm tests"
-      container('kubectl') {
-        pipeline.kubectlTest()
-      }
-      container('helm') {
-        pipeline.helmConfig()
-      }
-//      container('hadolint') {
-//        pipeline.hadolintTest()
+//      container('kubectl') {
+//        pipeline.kubectlTest()
 //      }
-//      container('lineage') {
-//        pipeline.lineageTest()
+//      container('helm') {
+//        pipeline.helmConfig()
 //      }
+      container('hadolint') {
+        pipeline.hadolintTest()
+      }
+      container('lineage') {
+        pipeline.lineageTest()
+      }
     }
 
     def acct = pipeline.getContainerRepoAcct(config)
