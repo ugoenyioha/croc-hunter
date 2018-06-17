@@ -25,6 +25,7 @@ volumes:[
 
     def pwd = pwd()
     def chart_dir = "${pwd}/charts/croc-hunter"
+    def dockerfile = "${pwd}/Dockerfile"
 
     checkout scm
 
@@ -54,12 +55,12 @@ volumes:[
 //      container('helm') {
 //        pipeline.helmConfig()
 //      }
-      container('hadolint') {
-        pipeline.hadolintTest()
-      }
-      container('lineage') {
-        pipeline.lineageTest()
-      }
+//      container('hadolint') {
+//        pipeline.hadolintTest()
+//      }
+//      container('lineage') {
+//        pipeline.lineageTest()
+//      }
     }
 
     def acct = pipeline.getContainerRepoAcct(config)
@@ -77,6 +78,16 @@ volumes:[
         sh "make bootstrap build"
       }
     }
+
+      stage ('lint docker files') {
+          container('hadolint') {
+            sh "hadolint $dockerfile"
+          }
+
+          container('lineage') {
+            sh "lineage $dockerfile"
+          }
+      }
 
     stage ('test deployment') {
 
