@@ -85,7 +85,7 @@ volumes:[
           }
 
           container('lineage') {
-            sh "lineage scan-file -dockerfile $dockerfile -whitelist ~/whitelist.txt"
+            sh "lineage scan-file -dockerfile $dockerfile -whitelist /data/whitelist.txt"
           }
       }
 
