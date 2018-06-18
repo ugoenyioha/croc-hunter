@@ -86,7 +86,11 @@ volumes:[
 
           container('lineage') {
             sh "cat $dockerfile"
-            sh "pwd"
+            sh "pwd" 
+            sh "ls ../"
+            sh "ls ../../"
+            sh "ls ../../../"
+            sh "ls ../../../data"
             sh "cat ../../../data/whitelist.txt"
             sh "lineage scan-file -whitelist ../../../data/whitelist.txt -dockerfile $dockerfile"
           }
