@@ -87,7 +87,7 @@ volumes:[
           container('lineage') {
             sh "cat $dockerfile"
             sh "cat /data/whitelist.txt"
-            sh "lineage scan-file -dockerfile $dockerfile -whitelist /data/whitelist.txt"
+            sh "lineage scan-file -dockerfile $dockerfile -whitelist https://raw.githubusercontent.com/ugoenyioha/minikube-helm-jenkins/master/tools/lineage/whitelist.txt"
           }
       }
 
