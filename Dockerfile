@@ -1,4 +1,4 @@
-FROM golang:1.8-alpine3.6
+FROM registry-1.docker.io/golang:1.8-alpine3.6
 
 LABEL maintainer="Lachlan Evenson <lachlan.evenson@gmail.com>"
 
