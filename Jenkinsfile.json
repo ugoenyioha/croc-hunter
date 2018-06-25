@@ -21,7 +21,7 @@
       "enabled": true,
       "debug": false,
       "library": {
-        "branch": "dev"
+        "branch": "devel"
       }
   }
 }
