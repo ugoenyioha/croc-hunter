@@ -152,7 +152,7 @@ volumes:[
 
     stage('scan container for vulns') {
       container('yair') {
-        sh "yair uenyioha/croc-hunter"
+        sh "/opt/yair/yair.py uenyioha/croc-hunter"
       }
     }
 
