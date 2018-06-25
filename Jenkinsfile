@@ -4,7 +4,7 @@
 // Requires pipeline-github-lib plugin to load library from github
 
 
-@Library('github.com/ugoenyioha/jenkins-pipeline@master')
+@Library('github.com/ugoenyioha/jenkins-pipeline@devel')
 
 def pipeline = new io.estrado.Pipeline()
 
