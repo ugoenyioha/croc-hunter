@@ -16,6 +16,7 @@ podTemplate(label: 'jenkins-pipeline', containers: [
     containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.4.8', command: 'cat', ttyEnabled: true),
     containerTemplate(name: 'hadolint', image: 'uenyioha/hadolint:latest', command: 'cat', ttyEnabled: true),
     containerTemplate(name: 'lineage', image: 'uenyioha/lineage:1.6', command: 'cat', ttyEnabled: true)
+    containerTemplate(name: 'yair', image: 'uenyioha/yair:latest', command: 'cat', ttyEnabled: true)
 ],
 volumes:[
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
@@ -79,17 +80,17 @@ volumes:[
       }
     }
 
-      stage ('lint docker files') {
-          container('hadolint') {
-            sh "hadolint $dockerfile"
-          }
+    stage ('lint docker files') {
+        container('hadolint') {
+          sh "hadolint $dockerfile"
+        }
 
-          container('lineage') {
-            sh "cat $dockerfile"
-            sh "cat /data/whitelist.txt"
-            sh "lineage scan-file -whitelist ../../../../data/whitelist.txt -dockerfile $dockerfile"
-          }
-      }
+        container('lineage') {
+          sh "cat $dockerfile"
+          sh "cat /data/whitelist.txt"
+          sh "lineage scan-file -whitelist ../../../../data/whitelist.txt -dockerfile $dockerfile"
+        }
+    }
 
     stage ('test deployment') {
 
@@ -148,6 +149,13 @@ volumes:[
       }
 
     }
+
+    stage('scan container for vulns') {
+      container('yair') {
+        sh "yair uenyioha/croc-hunter"
+      }
+    }
+
 
     if (env.BRANCH_NAME =~ "PR-*" ) {
       stage ('deploy to k8s') {
