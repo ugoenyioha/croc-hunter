@@ -152,6 +152,7 @@ volumes:[
 
     stage('scan container for vulns') {
       container('clair-scanner') {
+        sh "env"
         sh "clair-scanner -w /data/whitelist.yaml --clair=\"http://clair-clair:6060\" uenyioha/croc-hunter"
       }
     }
