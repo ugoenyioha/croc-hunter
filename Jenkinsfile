@@ -16,7 +16,7 @@ podTemplate(label: 'jenkins-pipeline', containers: [
     containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.4.8', command: 'cat', ttyEnabled: true),
     containerTemplate(name: 'hadolint', image: 'uenyioha/hadolint:latest', command: 'cat', ttyEnabled: true),
     containerTemplate(name: 'lineage', image: 'uenyioha/lineage:1.6', command: 'cat', ttyEnabled: true),
-    containerTemplate(name: 'yair', image: 'uenyioha/yair:1.2', command: 'cat', ttyEnabled: true)
+    containerTemplate(name: 'clair-scanner', image: 'uenyioha/clair-scanner:latest', command: 'cat', ttyEnabled: true)
 ],
 volumes:[
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
@@ -151,8 +151,8 @@ volumes:[
     }
 
     stage('scan container for vulns') {
-      container('yair') {
-        sh "/opt/yair/yair.py uenyioha/croc-hunter"
+      container('clair-scanner') {
+        sh "clair-scanner -w /data/whitelist.yaml --ip clair-clair uenyioha/croc-hunter"
       }
     }
 
