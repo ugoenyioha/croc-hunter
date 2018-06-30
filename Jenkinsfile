@@ -151,7 +151,7 @@ volumes:[
 
     stage('scan container for vulns') {
       container('clairctl') {
-        sh "clairctl --config /data/config.yaml push uenyioha/croc-hunter"
+        sh "clairctl --log-level Debug --config /data/config.yaml push uenyioha/croc-hunter"
       }
 
       container('clair-scanner') {
