@@ -153,8 +153,7 @@ volumes:[
       container('clairctl') {
         withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: config.container_repo.jenkins_creds_id,
                           usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-          sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${config.container_repo.host}"
-          sh "clairctl --log-level Debug --config /data/config.yaml push uenyioha/croc-hunter"
+          sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${config.container_repo.host} && clairctl --log-level Debug --config /data/config.yaml push uenyioha/croc-hunter"
         }
       }
 
