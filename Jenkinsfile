@@ -16,8 +16,7 @@ podTemplate(label: 'jenkins-pipeline', containers: [
     containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.4.8', command: 'cat', ttyEnabled: true),
     containerTemplate(name: 'hadolint', image: 'uenyioha/hadolint:latest', command: 'cat', ttyEnabled: true),
     containerTemplate(name: 'lineage', image: 'uenyioha/lineage:1.6', command: 'cat', ttyEnabled: true),
-    containerTemplate(name: 'clairctl', image: 'uenyioha/clairctl:2.1', command: 'cat', ttyEnabled: true),
-    containerTemplate(name: 'clair-scanner', image: 'uenyioha/clair-scanner:latest', command: 'cat', ttyEnabled: true)
+    containerTemplate(name: 'anchore-cli', image: 'anchore/engine-cli:latest', command: 'cat', ttyEnabled: true),
 ],
 volumes:[
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
@@ -51,18 +50,6 @@ volumes:[
       sh "env | sort"
 
       println "Runing kubectl/helm tests"
-//      container('kubectl') {
-//        pipeline.kubectlTest()
-//      }
-//      container('helm') {
-//        pipeline.helmConfig()
-//      }
-//      container('hadolint') {
-//        pipeline.hadolintTest()
-//      }
-//      container('lineage') {
-//        pipeline.lineageTest()
-//      }
     }
 
     def acct = pipeline.getContainerRepoAcct(config)
@@ -138,27 +125,23 @@ volumes:[
         )
 
         // anchore image scanning configuration
-        // println "Add container image tags to anchore scanning list"
-        
-        // def tag = image_tags_list.get(0)
-        // def imageLine = "${config.container_repo.host}/${acct}/${config.container_repo.repo}:${tag}" + ' ' + env.WORKSPACE + '/Dockerfile'
-        // writeFile file: 'anchore_images', text: imageLine
-        // anchore name: 'anchore_images', inputQueries: [[query: 'list-packages all'], [query: 'list-files all'], [query: 'cve-scan all'], [query: 'show-pkg-diffs base']]
+         println "Add container image tags to anchore scanning list"
+
+        def tag = image_tags_list.get(0)
+        def imageLine = "${config.container_repo.host}/${acct}/${config.container_repo.repo}:${tag}" + " " + env.WORKSPACE + "/Dockerfile"
+        writeFile file: 'anchore_images', text: imageLine
+        anchore name: 'anchore_images', inputQueries: [[query: 'list-packages all'], [query: 'list-files all'], [query: 'cve-scan all'], [query: 'show-pkg-diffs base']]
 
       }
 
     }
 
     stage('scan container for vulns') {
-      container('clairctl') {
-        withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: config.container_repo.jenkins_creds_id,
-                          usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-          sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${config.container_repo.host} && clairctl --log-level Debug --config /data/config.yaml push uenyioha/croc-hunter"
-        }
-      }
-
-      container('clair-scanner') {
-        sh "clair-scanner -w /data/whitelist.yaml --clair=\"http://clair-clair:6060\" uenyioha/croc-hunter"
+      container('anchore-cli') {
+//        withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: config.container_repo.anchore_creds_id,
+//                          usernameVariable: 'ANCHORE_CLI_USER', passwordVariable: 'ANCHORE_CLI_PASS']]) {
+          sh "anchore-cli evaluate check ${config.container_repo.host}/${acct}/${config.container_repo.repo}:${tag}"
+//        }
       }
     }
 
