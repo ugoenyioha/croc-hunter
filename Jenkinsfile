@@ -136,14 +136,14 @@ volumes:[
 
     }
 
-    stage('scan container for vulns') {
-      container('anchore-cli') {
-//        withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: config.container_repo.anchore_creds_id,
-//                          usernameVariable: 'ANCHORE_CLI_USER', passwordVariable: 'ANCHORE_CLI_PASS']]) {
-          sh "anchore-cli evaluate check ${config.container_repo.host}/${acct}/${config.container_repo.repo}:${tag}"
-//        }
-      }
-    }
+//    stage('scan container for vulns') {
+//      container('anchore-cli') {
+////        withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: config.container_repo.anchore_creds_id,
+////                          usernameVariable: 'ANCHORE_CLI_USER', passwordVariable: 'ANCHORE_CLI_PASS']]) {
+//          sh "anchore-cli evaluate check ${config.container_repo.host}/${acct}/${config.container_repo.repo}:${tag}"
+////        }
+//      }
+//    }
 
 
     if (env.BRANCH_NAME =~ "PR-*" ) {
