@@ -138,12 +138,6 @@ volumes:[
       writeFile file: 'anchore_images', text: imageLine
       anchore name: 'anchore_images', inputQueries: [[query: 'list-packages all'], [query: 'list-files all'], [query: 'cve-scan all'], [query: 'show-pkg-diffs base']]
 
-//      container('anchore-cli') {
-////        withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: config.container_repo.anchore_creds_id,
-////                          usernameVariable: 'ANCHORE_CLI_USER', passwordVariable: 'ANCHORE_CLI_PASS']]) {
-////          sh "anchore-cli evaluate check ${config.container_repo.host}/${acct}/${config.container_repo.repo}:${tag}"
-////        }
-//      }
     }
 
 
