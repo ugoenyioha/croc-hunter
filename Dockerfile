@@ -1,4 +1,4 @@
-FROM registry-1.docker.io/library/golang:1.8-alpine3.6
+FROM registry-1.docker.io/library/golang:1.9-stretch
 
 LABEL maintainer="Ugo Enyioha"
 
