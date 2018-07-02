@@ -1,13 +1,13 @@
 FROM registry-1.docker.io/library/golang:1.8-alpine3.6
 
-LABEL maintainer="Lachlan Evenson <lachlan.evenson@gmail.com>"
+LABEL maintainer="Ugo Enyioha"
 
 ARG VCS_REF
 ARG BUILD_DATE
 
 # Metadata
 LABEL org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.vcs-url="https://github.com/lachie83/croc-hunter" \
+      org.label-schema.vcs-url="https://github.com/uenyioha/croc-hunter" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.docker.dockerfile="/Dockerfile"
 
